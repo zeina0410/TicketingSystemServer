@@ -15,7 +15,7 @@ app.use(express.static('public'));
 const { requireAuth } = require('./middleware/authMiddleware');
 
 ///////////////////////////////////////////////// Connecting to Mongoose ///////////////////////////////////
-const uri = 'mongodb://127.0.0.1:27017/juniorDB' || process.env.DATABASE_URI;
+const uri = process.env.DATABASE_URI;
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -26,7 +26,7 @@ db.on('error', (error)=> console.error('MongoDB connection error:', error));
 db.once('open', ()=> {
     console.log('MongoDB connected!');
     //////////////////////////// Starting Server /////////////////////////////
-    app.listen(3000 || process.env.PORT, ()=> {
+    app.listen(process.env.PORT, ()=> {
         console.log("Server started!");
     });
 });
