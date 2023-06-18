@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Submit a Ticket</title>
+  </head>
+  <body>
+    <h1>Submit a Ticket</h1>
+    <form action="/ticket" method="POST" id="ticket-form">
+		
+      <label for="customer">Customer:</label>
+      <input type="text" name="customer" required><br>
+
+      <label for="description">Description:</label>
+      <input type="text" name="description"><br>
+
+      <input type="submit" value="Submit">
+    </form>
+
+    <form action="/ticket2" method="POST" enctype="multipart/form-data">
+      <label for="image">Image:</label>
+      <input type="file" name="image" accept="image/*"><br>
+      <input type="submit" value="Submit">
+    </form>
+
+    <script>
+      const form = document.querySelector('#ticket-form');
+      
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent default form submission behavior
+        
+        const formData = new FormData(form);
+        const formDataJson = {};
+        formData.forEach((value, key) => {
+          formDataJson[key] = value;
+        });
+        
+        try {
+          const response = await fetch('/ticket', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formDataJson)
+          });
+          
+          if (response.ok) {
+            console.log('Ticket created successfully');
+          } else {
+            console.error('Failed to create ticket');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>

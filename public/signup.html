@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Signup</title>
+  </head>
+  <body>
+    <h1>Signup</h1>
+    <form method="post" action="/signup" onsubmit="handleSubmit(event)">
+      <label for="phone">Phone Number:</label>
+      <input type="text" name="phone" required minlength="10" maxlength="10" pattern="^09[3-9][0-9]+$"><br>
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" required minlength="6"><br>
+
+      <label for="name">Name:</label>
+      <input type="text" name="name" required minlength="3"><br>
+
+      <label for="region">Region:</label>
+      <select name="region" required>
+        <option value="">Select Region</option>
+        <option value="region1">baghdad</option>
+        <option value="region2">hamra</option>
+        <option value="region3">babtoma</option>
+      </select><br>
+
+      <label for="street">Street:</label>
+      <input type="text" name="street" required><br>
+
+      <label for="building">Building:</label>
+      <input type="text" name="building" required><br>
+
+      <label for="floor">Floor:</label>
+      <input type="text" name="floor" required><br>
+
+      <label for="flat">Flat:</label>
+      <input type="text" name="flat" required><br>
+
+      <input type="submit" value="Sign up">
+    </form>
+
+    <script>
+      function handleSubmit(event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const json = JSON.stringify(Object.fromEntries(formData.entries()));
+
+        fetch('/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: json
+        }).then(response => {
+          console.log('Response:', response);
+        }).catch(error => {
+          console.error('Error:', error);
+        });
+      }
+    </script>
+  </body>
+</html>

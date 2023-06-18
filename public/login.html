@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+  </head>
+  <body>
+    <h1>Login</h1>
+    <form action="/login" method="POST"  id="login-form">
+      <label for="phone">Phone Number:</label>
+      <input type="text" name="phone" id="phone" required minlength="10" maxlength="10" pattern="^09[3-9][0-9]+$"><br>
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" required minlength="6"><br>
+
+      <input type="submit" value="Login">
+    </form>
+
+    <script>
+      const loginForm = document.getElementById('login-form');
+
+      loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(loginForm);
+        const data = {
+          phone: formData.get('phone'),
+          password: formData.get('password')
+        };
+
+        console.log(JSON.stringify(data));
+        // Now you can send the data as JSON to your server using AJAX or fetch()
+      });
+    </script>
+  </body>
+</html>
